@@ -1,0 +1,40 @@
+:PNLGRP.                                                               
+.*---------------------------------------------------------------------
+:HELP   NAME=DB2TOEXCEL.DB2 table to Excel                             
+:P.This command can convert a table to Excel (.xlsx).                  
+:P.It uses Python and the Python module XlsxWriter.                    
+:P.Enter the name of the table and library. It will check that the     
+ table exists and if user has permission.                              
+:P.The folder is also checked if it exists.                            
+:P.The name of Excel can entered in the Stream file name parameter.    
+:P.If no stream file name is given then the table name is used.        
+:P.The Excel will be created in the IFS Path parameter. The default    
+   path is *USRPRF (creates file in /home/ + userid).                  
+:P.The current IBM i user id will be used as the author in the Excel   
+   properties.                                                         
+:EHELP.                                                                
+.*---------------------------------------------------------------------
+:HELP   NAME='DB2TOEXCEL/FILENAME'.File, libary and member name        
+:P.:HP2.FILENAME:EHP2.                                                 
+File (table) name, library name and optionally member name.            
+:P. Member name can be a specific name or a generic name               
+ qualified by an asterisk (*).                                     
+ Special values '*ALL', '*FIRST' or '*LAST' can also be used in    
+the member name.                                                   
+:EHELP.                                                            
+:HELP   NAME='DB2TOEXCEL/TOFILENAME'.Excel name                    
+:P.:HP2.TOFILENAME:EHP2.                                           
+Excel name. There is no need to put a suffix, the extension .xlsx  
+will be added automatically. If a suffix is added, then it will be 
+removed.                                                           
+:EHELP.                                                            
+:HELP   NAME='DB2TOEXCEL/IFSPATH'. Folder name                     
+:P.:HP2.IFSPATH:EHP2.                                                
+The name of the IFS path.                                            
+:P.The default path is *USRPRF (creates file in /home/ + userid).    
+:EHELP.                                                              
+:HELP   NAME='DB2TOEXCEL/REPLACE'. Replace file if exists.           
+:P.:HP2.REPLACE:EHP2.                                                
+*YES - will replace the file if already exists.                      
+:EHELP.                                                              
+:EPNLGRP.                                                            
