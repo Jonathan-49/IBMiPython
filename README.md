@@ -14,6 +14,8 @@ It can be run from the IBM i PASE command line.
  Or it can be run via a CL command created using a wrapper command, see the following link
  to download an install the command QSHPYRUN https://github.com/richardschoen/QshOni
  
+ Once the command QSHPYRUN is installed on the IBM i;  the source to build command *db2toexcel* is in folders  
+ QCLLESRC, QCMDSRC and QPNLSRC of this repo. 
  
  Below is the CL command *db2toexcel* prompted from IBM i ACS.  
  
