@@ -1,0 +1,106 @@
+/*****************************************************************************/
+/* Program : DB2TOEXCEL -                                                    */
+/* Jonathan Heinz / 19.03.2023                                               */
+/* This program creates an Excel from a table by calling the Python          */
+/* script db2toexcel.py.                                                     */
+/*****************************************************************************/
+PGM        PARM(&FILENAME &TOFILENAME  &IFSPATH &REPLACE)
+
+  DCL        VAR(&FILENAME) TYPE(*CHAR) LEN(30)
+  DCL        VAR(&FILE) TYPE(*CHAR) LEN(10)
+  DCL        VAR(&LIB) TYPE(*CHAR) LEN(10)
+  DCL        VAR(&MBR) TYPE(*CHAR) LEN(10)
+  DCL        VAR(&REPLACE) TYPE(*CHAR) LEN(4)
+  DCL        VAR(&TOFILENAME) TYPE(*CHAR) LEN(64)
+  DCL        VAR(&FULLPATH) TYPE(*CHAR) LEN(1000)
+  DCL        VAR(&IFSPATH) TYPE(*CHAR) LEN(160)
+  DCL        VAR(&MSG) TYPE(*CHAR) LEN(80)
+  DCL        VAR(&MSGDTA) TYPE(*CHAR) LEN(256)
+  DCL        VAR(&MSGID) TYPE(*CHAR) LEN(7)
+  DCL        VAR(&MSGTOUSER) TYPE(*CHAR) LEN(160)
+  DCL        VAR(&RCIND) TYPE(*CHAR) LEN(1)
+  DCL        VAR(&SHOW) TYPE(*CHAR) LEN(4)
+  DCL        VAR(&NDTYPE) TYPE(*CHAR) LEN(5)
+  DCL        VAR(&USRPRF) TYPE(*CHAR) LEN(10)
+  DCL        VAR(&WCMD) TYPE(*CHAR) LEN(1000)
+  DCL        VAR(&WCOMMAND) TYPE(*CHAR) LEN(1000)
+  DCL        VAR(&ARGS) TYPE(*CHAR) LEN(1000)
+  DCL        VAR(&CMD) TYPE(*CHAR) LEN(1000)
+  DCL        VAR(&CMDLEN) TYPE(*DEC) LEN(15 5) VALUE(1000)
+  DCL        VAR(&CURUSER) TYPE(*CHAR) LEN(10)
+  DCL        VAR(&CCSID) TYPE(*DEC) LEN(5 0)
+  DCL        VAR(&CCSIDCHAR) TYPE(*CHAR) LEN(5)
+
+ /*monMsg cpf0000 exec(goTo abEnd)*/
+
+  RTVJOBA    CURUSER(&CURUSER) CCSID(&CCSID)
+  CHGVAR     VAR(&CCSIDCHAR) VALUE(&CCSID)
+  CHGVAR     VAR(&FILE) VALUE(%SST(&FILENAME 1 10))
+  CHGVAR     VAR(&LIB) VALUE(%SST(&FILENAME 11 10))
+  CHGVAR     VAR(&MBR) VALUE(%SST(&FILENAME 21 10))
+  CHKOBJ     OBJ(&LIB/&FILE) OBJTYPE(*FILE) MBR(*FIRST) +
+             AUT(*ALL)
+  MONMSG     MSGID(CPF9800) EXEC(DO)
+    CHGVAR     VAR(&MSG) VALUE('File' *BCAT &FILE *BCAT +
+    'member' *BCAT &MBR *BCAT 'in library' +
+    *BCAT &LIB *BCAT 'not found or not +
+        authorized')
+    SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA(&MSG) +
+    MSGTYPE(*ESCAPE)
+  ENDDO
+  IF         COND(&IFSPATH = '*USRPRF') THEN(DO)
+    RTVJOBA    USER(&USRPRF)
+    CHGVAR     VAR(&IFSPATH) VALUE('/home' *TCAT '/' *CAT +
+      &USRPRF)
+  ENDDO
+  IF         COND(&TOFILENAME = ' ') THEN(DO)
+    CHGVAR     VAR(&TOFILENAME) VALUE(&FILE)
+  ENDDO
+  IF         COND(&MBR = ' ') THEN(DO)
+    CHGVAR     VAR(&MBR) VALUE(*FIRST)
+  ENDDO
+/*----------------------------------------------------------------------------*/
+/* Make sure folder exists */
+/*----------------------------------------------------------------------------*/
+  QSHIFSCHK  FILNAM(&IFSPATH)
+ /* EXISTS, DO NOTHING SPECIAL */
+  MONMSG     MSGID(CPF9897) EXEC(DO)
+  ENDDO
+
+ /* DOES NOT EXIST. BAIL OUT */
+  MONMSG     MSGID(CPF9898) EXEC(DO)
+    CHGVAR     VAR(&MSG) VALUE('Folder ' *BCAT &IFSPATH +
+        *BCAT 'not found')
+    SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA(&MSG) +
+    MSGTYPE(*ESCAPE)
+  ENDDO
+  CHGVAR     VAR(&FULLPATH) VALUE(&IFSPATH *TCAT '/' +
+              *TCAT &TOFILENAME *TCAT '.xlsx')
+  IF         COND(&REPLACE *EQ '*NO') THEN(DO)
+    QSHIFSCHK  FILNAM(&FULLPATH)
+    MONMSG     MSGID(CPF9897) EXEC(DO)
+      CHGVAR     VAR(&MSG) VALUE('Excel ' *BCAT &FULLPATH +
+                  *BCAT 'is found')
+      SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA(&MSG) +
+                  MSGTYPE(*ESCAPE)
+    ENDDO
+    MONMSG     MSGID(CPF9898) EXEC(DO)
+    ENDDO
+  ENDDO
+
+  CHGVAR &ARGS VALUE(&LIB *BCAT ' ' *BCAT &FILE *BCAT ' ' +
+   *BCAT &IFSPATH *bcat ' ' *BCAT &TOFILENAME)
+
+ /*          PYPATH(*DEFAULT) CCSID(278) +  */
+             QSHPYRUN   SCRIPTDIR('/dnatest') +
+                          SCRIPTFILE(db2toexcel3.py) ARGS(&LIB +
+                          &FILE &MBR &IFSPATH &TOFILENAME &CURUSER) +
+                          PYVERSION(3) PYPATH(*DEFAULT) +
+                          DSPSTDOUT(*NO) LOGSTDOUT(*NO) +
+                          PRTSTDOUT(*NO) DLTSTDOUT(*YES) +
+                          CCSID(&CCSIDCHAR)
+
+  SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('File +
+             created successfully') TOPGMQ(*EXT) +
+             MSGTYPE(*STATUS)
+ENDPGM
