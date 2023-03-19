@@ -92,8 +92,8 @@ PGM        PARM(&FILENAME &TOFILENAME  &IFSPATH &REPLACE)
    *BCAT &IFSPATH *bcat ' ' *BCAT &TOFILENAME)
 
  /*          PYPATH(*DEFAULT) CCSID(278) +  */
-             QSHPYRUN   SCRIPTDIR('/dnatest') +
-                          SCRIPTFILE(db2toexcel3.py) ARGS(&LIB +
+             QSHPYRUN   SCRIPTDIR('/pythonscripts') +
+                          SCRIPTFILE(db2toexcel.py) ARGS(&LIB +
                           &FILE &MBR &IFSPATH &TOFILENAME &CURUSER) +
                           PYVERSION(3) PYPATH(*DEFAULT) +
                           DSPSTDOUT(*NO) LOGSTDOUT(*NO) +
