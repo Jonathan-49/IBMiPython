@@ -1,6 +1,6 @@
 # db2toexcel.py
 Description:  
- This python script will read 1 or more members (partitions)
+ This python script will read one or more members (partitions)
   of an IBM i Db2 table and populate an Excel.  
   One worksheet is created per member.  
   
@@ -11,8 +11,46 @@ Pip packages needed:
 It can be run from the IBM i PASE command line.  
  `python3 db2toexcel.py 'libraryname' 'tablename' 'membername'  'IFSfolder' 'nameofExcel' 'userid'` 
  
- Or it can be run via a CL command created using https://github.com/richardschoen/QshOni
+ Or it can be run via a CL command created using a wrapper command, see the following link
+ to download an install the command QSHPYRUN https://github.com/richardschoen/QshOni
  
- ![image](https://user-images.githubusercontent.com/62209270/226181930-12bf753e-3bb7-4428-bb6a-c23b753a0f17.png)
+ 
+ Below is the CL command *db2toexcel* prompted from IBM i ACS.  
+ 
+ ![image](https://user-images.githubusercontent.com/62209270/226181930-12bf753e-3bb7-4428-bb6a-c23b753a0f17.png)  
+ 
+ ![image](https://user-images.githubusercontent.com/62209270/226182358-9e2facce-8519-4c26-a3a7-a0eac46c8232.png)
+ 
+                                                                                                                                                    
+It will check that the   
+table exists and if user has permission.                          
+                                                                  
+The folder is also checked if it exists.                          
+                                                                  
+The name of Excel can entered in the Stream file name parameter.  
+                                                                  
+If no stream file name is given then the table name is used.      
+                                                                  
+The Excel will be created in the IFS Path parameter. The default  
+path is *USRPRF (creates file in /home/ + userid).                
+The current IBM i user id will be used as the author in the Excel   
+properties.                                                         
+                                                                    
+FILENAME File (table) name, library name and optionally member name.
+                                                                    
+Member name can be a specific name or a generic name  qualified by  
+an asterisk (*).   Special values '*ALL', '*FIRST' or '*LAST' can   
+also be used in the member name.                                    
+                                                                    
+TOFILENAME Excel name. There is no need to put a suffix, the        
+extension .xlsx will be added automatically. If a suffix is added,  
+then it will be removed.                                            
+                                                                    
+IFSPATH The name of the IFS path.    
+
+The default path is *USRPRF (creates file in /home/ + userid).  
+                                                                
+REPLACE *YES - will replace the file if already exists.         
+                                                                    
 
  
