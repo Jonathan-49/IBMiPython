@@ -11,3 +11,8 @@ Pip packages needed:
 It can be run from the IBM i PASE command line.  
  `python3 db2toexcel.py 'libraryname' 'tablename' 'membername'  'IFSfolder' 'nameofExcel' 'userid'` 
  
+ Or it can be run via a CL command created using https://github.com/richardschoen/QshOni
+ 
+ ![image](https://user-images.githubusercontent.com/62209270/226181930-12bf753e-3bb7-4428-bb6a-c23b753a0f17.png)
+
+ 
