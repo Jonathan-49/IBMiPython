@@ -4,9 +4,11 @@ Description:
   of an IBM i Db2 table and populate an Excel.  
   One worksheet is created per member.  
   
-Pip packages needed:  
+Pip packages needed to be installed on IBM i:  
  pip3 install ibm_db_dbi  
  pip3 install xlsxwriter
+ 
+Runs on IBM i OS 7.3 TR 13
  
 It can be run from the IBM i PASE command line.  
  `python3 db2toexcel.py 'libraryname' 'tablename' 'membername'  'IFSfolder' 'nameofExcel' 'userid'` 
