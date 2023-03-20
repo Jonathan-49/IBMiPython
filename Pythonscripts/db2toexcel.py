@@ -204,7 +204,6 @@ def main():
     else:
         if args.member.count('*') == 1:
             args.member = args.member.replace('*', '%')
-            print(args.member)
             findmembersSQL = selectmembers + " and table_partition like upper('"+args.member+"')  \
       order by create_timestamp desc "
         else:
