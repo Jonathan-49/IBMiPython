@@ -139,9 +139,8 @@ def create_sheet(library, table, member, conn, workbook, header_format):
             headers[colnum]) else len(headers[colnum]))
     worksheet.write_row('A1', headers, header_format)
     worksheet.freeze_panes(1, 0)
-    print(member)
+    
     for rownum, row in enumerate(cur, start=1):
-        print(row)
         worksheet.write_row(rownum, 0, row)
 
     cur.close()
@@ -211,7 +210,7 @@ def main():
         else:
             findmembersSQL = selectmembers + " and table_partition=upper('"+args.member+"')  \
       order by create_timestamp desc "
-    print(findmembersSQL)
+    
     try:
         readmembers.execute(findmembersSQL)
     except Exception as err:
