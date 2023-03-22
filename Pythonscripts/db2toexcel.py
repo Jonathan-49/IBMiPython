@@ -221,7 +221,7 @@ def main():
         print('No members found')
     else:
         # member name(s) found so create workbook and create 1 or more sheets
-        workbook = xlsxwriter.Workbook(newfolder + newfilename + '.xlsx')
+        workbook = xlsxwriter.Workbook(newfolder + newfilename + '.xlsx', {'constant_memory': True})
         header_format = workbook.add_format({'bold': True,
                                              'align': 'center',
                                              'valign': 'vcenter',
