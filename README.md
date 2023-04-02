@@ -2,7 +2,7 @@
 Description:  
  This python script will read one or more members (partitions)
   of an IBM i Db2 table and populate an Excel.  
-  One worksheet is created per member.  
+  One worksheet is created per member. The member name is used as the worksheet name. 
   
 Pip packages needed to be installed on IBM i:  
  pip3 install ibm_db_dbi  
