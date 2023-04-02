@@ -11,7 +11,24 @@ Pip packages needed to be installed on IBM i:
 Runs on IBM i OS 7.3 TR 13
  
 It can be run from the IBM i PASE command line.  
- `python3 db2toexcel.py 'libraryname' 'tablename' 'membername'  'IFSfolder' 'nameofExcel' 'userid'` 
+ `python3 db2toexcel.py 'libraryname' 'tablename' 'membername'  'IFSfolder' 'nameofExcel' 'userid'`   
+ ``` python3 db2toexcel.py -h  
+usage db2toexcel [-h]  library table member folder filename username   
+ positional arguments:                                                            
+  library       library name                                                     
+  table         table name                                                       
+  member        Member name; can be the name of a member or a generic name       
+                qualified by an asterisk (*); Special values can also be used;   
+                '*ALL', '*FIRST', '*LAST' if name is blank then '*FIRST' is      
+                used.                                                            
+  folder        folder path                                                      
+  filename      output file name                  
+  username      User name                         
+                                                   
+ optional arguments:                               
+   -h, --help    show this help message and exit  
+```
+ 
  
  Or it can be run via a CL command created using a wrapper command, see the following link
  to download an install the command QSHPYRUN https://github.com/richardschoen/QshOni
