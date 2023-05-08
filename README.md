@@ -8,7 +8,7 @@ Pip packages needed to be installed on IBM i:
  pip3 install ibm_db_dbi  
  pip3 install xlsxwriter
  
-Runs on IBM i OS 7.3 TR 13
+Runs on IBM i OS 7.3 TR 13 and 7.4 TR 7
  
 It can be run from the IBM i PASE command line.  
  `python3 db2toexcel.py 'libraryname' 'tablename' 'membername'  'IFSfolder' 'nameofExcel' 'userid'`   
