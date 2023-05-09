@@ -38,7 +38,8 @@ usage db2toexcel [-h]  library table member folder filename username
  
  Below is the CL command *db2toexcel* prompted from IBM i ACS.  
  
- ![image](https://user-images.githubusercontent.com/62209270/226181930-12bf753e-3bb7-4428-bb6a-c23b753a0f17.png)  
+ ![image](https://github.com/Jonathan-49/IBMiPython/assets/62209270/5117f52c-b838-4993-8d8f-804d42be3032)
+  
  
  ![image](https://user-images.githubusercontent.com/62209270/226182358-9e2facce-8519-4c26-a3a7-a0eac46c8232.png)
  
