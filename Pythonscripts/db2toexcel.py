@@ -42,24 +42,41 @@ def validate_args(args, conn):
              errormsgs (list): List of error messages, empty if no problems found.
     """
     errormsgs = []
-    objectcheck = conn.cursor()
-    objectcheck.execute(
-        "select count(*) from table(QSYS2.LIBRARY_INFO(UPPER('"+args.library+"')))")
-    one_row = objectcheck.fetchone()
     args.folder = args.folder.strip('/')
     args.folder = "/" + args.folder + "/"
     if not Path(args.folder).exists():
         errormsgs.append("Directory " + args.folder + " not found")
     if not Path(args.folder).is_dir():
         errormsgs.append(args.folder + " is not a directory")
-
-    if one_row[0] == 0:
-        errormsgs.append("Library/schema: " + args.library + " not found")
-    objectcheck.execute("select count(*) from QSYS2.SYSTABLES where table_schema = \
-    upper('"+args.library+"') and table_name  =upper('" + args.table + "')")
-    one_row = objectcheck.fetchone()
-    if one_row[0] == 0:
-        errormsgs.append("Table: " + args.table +
+    objectcheck = conn.cursor()
+    if args.library.upper() =='*LIBL':
+        objectcheck.execute( "select table_schema \
+         from qsys2.syspartitionstat a, QSYS2.LIBRARY_LIST_INFO   \
+         where  table_name  = upper('" + args.table + "') and table_Schema =SYSTEM_SCHEMA_NAME \
+         order by ordinal_position fetch first 1 rows only")
+        one_row = objectcheck.fetchone()
+        if one_row:
+          args.library=one_row[0]
+          print(one_row)
+        else:
+          errormsgs.append("Table: " + args.table +
+                         " not found in library list") 
+    else:       
+        objectcheck.execute(
+         "select count(*) from table(QSYS2.LIBRARY_INFO(UPPER('"+args.library+"')))")
+        one_row = objectcheck.fetchone()
+        
+        if one_row[0] == 0:
+           errormsgs.append("Library/schema: " + args.library + " not found")
+        try:
+            objectcheck.execute("select count(*) from QSYS2.SYSTABLES where table_schema = \
+            upper('"+args.library+"') and table_name  =upper('" + args.table + "')")
+        except Exception as err:
+            print(f"Error reading SYSTABLES; ({err}) ")
+    
+        one_row = objectcheck.fetchone()
+        if one_row[0] == 0:
+           errormsgs.append("Table: " + args.table +
                          " not found in library/schema " + args.library)
     if errormsgs:
         pprint(errormsgs)
@@ -67,6 +84,7 @@ def validate_args(args, conn):
     objectcheck.close()
 
     return True
+
 
 
 def validate_membername(membername):
