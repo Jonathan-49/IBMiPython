@@ -16,7 +16,7 @@ It can be run from the IBM i PASE command line.
 usage db2toexcel [-h]  library table member folder filename username   
  positional arguments:                                                            
   library       library name                                                     
-  table         table name                                                       
+  table         table name or *libl                                                      
   member        Member name; can be the name of a member or a generic name       
                 qualified by an asterisk (*); Special values can also be used;   
                 '*ALL', '*FIRST', '*LAST' if name is blank then '*FIRST' is      
