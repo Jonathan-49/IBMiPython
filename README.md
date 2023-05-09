@@ -37,7 +37,7 @@ usage db2toexcel [-h]  library table member folder filename username
  QCLLESRC, QCMDSRC and QPNLSRC of this repo. 
  
  Below is the CL command *db2toexcel* prompted from IBM i ACS.  
- 'CL: DB2TOEXCEL FILENAME(libname/tablename) TOFILENAME('Excelname') IFSPATH('/pathname') REPLACE(*YES)'
+  'CL: DB2TOEXCEL FILENAME(libname/tablename) TOFILENAME('Excelname') IFSPATH('/pathname') REPLACE(*YES)' 
  
  ![image](https://github.com/Jonathan-49/IBMiPython/assets/62209270/5117f52c-b838-4993-8d8f-804d42be3032)
   
