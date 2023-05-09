@@ -189,7 +189,7 @@ def main():
     readmembers = conn.cursor()
 
     selectmembers = "select table_partition as membername  \
-  from qsys2.collection_services_info c, qsys2.syspartitionstat a   \
+  from qsys2.syspartitionstat a   \
   where table_schema = upper('"+args.library+"') and table_name  =upper('" + args.table + "')"
 
     findmembersSQL = selectmembers + " order by create_timestamp desc"
