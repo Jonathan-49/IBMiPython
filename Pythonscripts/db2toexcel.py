@@ -168,7 +168,7 @@ def main():
     # Obtain the parameters
     parser = argparse.ArgumentParser(prog='db2toexcel',
                                      description="Export Db2 table and it's members to an Excel. Each member will be populated in a seperate sheet")
-    parser.add_argument("library", type=str.upper, help="library name")
+    parser.add_argument("library", type=str.upper, help="library name or *LIBL")
     parser.add_argument("table", type=str.upper, help="table name")
     parser.add_argument("member", type=str.upper, help="Member name; can be the name of a member or \
    a generic name qualified by an asterisk (*); Special values can also be used; '*ALL', '*FIRST', '*LAST' \
