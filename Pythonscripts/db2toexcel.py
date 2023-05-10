@@ -57,7 +57,7 @@ def validate_args(args, conn):
         one_row = objectcheck.fetchone()
         if one_row:
           args.library=one_row[0]
-          print(one_row)
+          print(f'Table found in schema/library {one_row[0]}')
         else:
           errormsgs.append("Table: " + args.table +
                          " not found in library list") 
