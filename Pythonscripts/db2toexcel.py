@@ -12,7 +12,7 @@
 # pip3 install xlsxwriter
 #
 # Parameters
-# P1= IBM i library/schema name
+# P1= IBM i library/schema name or *LIBL (library list)
 # P2= Table name
 # p3= Member name,
 #  Member name can be a specific name or a generic name
