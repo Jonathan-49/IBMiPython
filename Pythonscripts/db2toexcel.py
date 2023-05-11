@@ -211,6 +211,7 @@ def main():
     if int(one_row[0])==0:
       print('Not authorised to query the table')
       sys.exit(1)
+        
     authcheck.close()
     
     # Find all the member names, this depends if the member parameter
