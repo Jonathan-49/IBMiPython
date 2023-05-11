@@ -202,6 +202,17 @@ def main():
 
     if not validate_args(args, conn):
         sys.exit(1)
+     
+    #Check permission to use table/file
+    authcheck = conn.cursor()
+    authcheck.execute( "VALUES QSYS2.SQL_CHECK_AUTHORITY(upper('"+args.library+"'),  \
+                        upper('"+args.table+"'))")
+    one_row = authcheck.fetchone()
+    if int(one_row[0])==0:
+      print('Not authorised to query the table')
+      sys.exit(1)
+    authcheck.close()
+    
     # Find all the member names, this depends if the member parameter
     # is the full name, generic name qualified with a '*' or a special value.
     readmembers = conn.cursor()
