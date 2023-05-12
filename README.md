@@ -57,21 +57,21 @@ path is *USRPRF (creates file in /home/ + userid).
 The current IBM i user id will be used as the author in the Excel   
 properties.                                                         
                                                                     
-FILENAME File (table) name, library name and optionally member name.
+**FILENAME** - File (table) name, library name and optionally member name.
                                                                     
 Member name can be a specific name or a generic name  qualified by  
 an asterisk (*).   Special values '*ALL', '*FIRST' or '*LAST' can   
 also be used in the member name.                                    
                                                                     
-TOFILENAME Excel name. There is no need to put a suffix, the        
+**TOFILENAME** - Excel name. There is no need to put a suffix, the        
 extension .xlsx will be added automatically. If a suffix is added,  
 then it will be removed.                                            
                                                                     
-IFSPATH The name of the IFS path.    
+**IFSPATH** - The name of the IFS path.    
 
 The default path is *USRPRF (creates file in /home/ + userid).  
                                                                 
-REPLACE *YES - will replace the file if already exists.         
+**REPLACE** - *YES - will replace the file if already exists.         
                                                                     
 
  
