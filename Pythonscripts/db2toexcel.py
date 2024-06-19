@@ -98,26 +98,26 @@ def validate_membername(membername):
       Returns:
              errormsgs (list): List of error messages, empty if no problems found.
     """
-    errorlist = []
+    errormsgs = []
 
-    errorlist.clear()
+    errormsgs.clear()
     if len(membername) == 0:
-        errorlist.append('Member name is missing')
+        errormsgs.append('Member name is missing')
     if len(membername) > 10:
-        errorlist.append('Member name cannot more than 10 long')
+        errormsgs.append('Member name cannot more than 10 long')
     if membername[0] == '*' and membername not in ['*ALL', '*FIRST', '*LAST']:
-        errorlist.append('Member name cannot start with a *')
+        errormsgs.append('Member name cannot start with a *')
     if len(membername) > 0 and membername[0].isdigit():
-        errorlist.append('Name Cannot start with a digit')
+        errormsgs.append('Name Cannot start with a digit')
     if membername.count('*') > 1:
-        errorlist.append('More than one asterick')
+        errormsgs.append('More than one asterick')
     if re.match(r"[^A-Za-z0-9\*]", membername):
-        errorlist.append('Contains invalid character')
+        errormsgs.append('Contains invalid character')
 
-    if errorlist:
-        pprint(errorlist, indent=10, width=50)
+    if errormsgs:
+        pprint(errormsgs, indent=10, width=50)
 
-    return errorlist
+    return errormsgs
 
 
 def create_sheet(library, table, member, conn, workbook, header_format):
