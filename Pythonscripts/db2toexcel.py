@@ -99,20 +99,19 @@ def validate_membername(membername):
              errormsgs (list): List of error messages, empty if no problems found.
     """
     errormsgs = []
-
+    membername = membername.strip()
     errormsgs.clear()
     if len(membername) == 0:
         errormsgs.append('Member name is missing')
-    if len(membername) > 10:
-        errormsgs.append('Member name cannot more than 10 long')
-    if membername[0] == '*' and membername not in ['*ALL', '*FIRST', '*LAST']:
-        errormsgs.append('Member name cannot start with a *')
-    if len(membername) > 0 and membername[0].isdigit():
-        errormsgs.append('Name Cannot start with a digit')
-    if membername.count('*') > 1:
-        errormsgs.append('More than one asterick')
-    if re.match(r"[^A-Za-z0-9\*]", membername):
-        errormsgs.append('Contains invalid character')
+    else:
+        if len(membername) > 10:
+            errormsgs.append('Member name cannot more than 10 long')
+        if membername[0] == '*' and membername not in ['*ALL', '*FIRST', '*LAST']:
+            errormsgs.append('Member name cannot start with a *')
+        if membername[0].isdigit():
+            errormsgs.append('Name Cannot start with a digit')
+        if re.search(r"[^A-Za-z0-9\*]", membername) or re.search(r"[*]", membername[1:]):
+            errormsgs.append('Contains invalid character(s)')
 
     if errormsgs:
         pprint(errormsgs, indent=10, width=50)
